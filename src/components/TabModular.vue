@@ -1,43 +1,31 @@
 <script>
-import TabBar from './TabBar.vue';
-import TabContent from './TabContent.vue';
+import TabBar from "./TabBar.vue";
+import TabContent from "./TabContent.vue";
+import store from "../stores/store";
 
 export default {
-    components: {
-        TabBar,
-        TabContent,
+  components: {
+    TabBar,
+    TabContent,
+  },
+  data() {
+    return {
+      store,
+    };
+  },
+  methods: {
+    changeTabHandler(tab) {
+      store.actual = tab;
     },
-    data() {
-        return {
-            actualTab: undefined,
-            tabs: [
-                {
-                    id: 'tab1',
-                    name: 'Tab 1'
-                },
-                {
-                    id: 'tab2',
-                    name: 'Tab 2'
-                },
-                {
-                    id: 'tab3',
-                    name: 'Tab 3'
-                }
-            ]
-        }
-    },
-    mounted() {
-        this.actualTab = this.tabs[0];
-    },
-    methods: {
-        changeTabHandler(tab) {
-            this.actualTab = tab;
-        }
-    }
-}
+  },
+};
 </script>
 
 <template>
-    <TabBar :tabs="tabs" :actual="actualTab" @on-change-tab="tab => changeTabHandler(tab)" />
-    <TabContent :actual="actualTab" />
+  <TabBar
+    :tabs="store.tabs"
+    :actual="store.actual"
+    @on-change-tab="(tab) => changeTabHandler(tab)"
+  />
+  <TabContent :actual="store.actual" />
 </template>
